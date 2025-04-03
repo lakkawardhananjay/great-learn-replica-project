@@ -3,7 +3,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Progress } from './ui/progress';
-import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle, FileText, ArrowLeft, File } from 'lucide-react';
+import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle, FileText, ArrowLeft, File, Globe } from 'lucide-react';
 import CybersecurityQuiz from './CybersecurityQuiz';
 
 type QuizQuestion = {
@@ -181,11 +181,42 @@ const cybersecurityUnits: Unit[] = [
         }
       ]
     }
+  },
+  {
+    id: 6,
+    title: "Advanced Threat Intelligence",
+    description: "Learn techniques to identify, analyze, and respond to advanced cyber threats",
+    icon: <Globe className="h-8 w-8 text-green-800" />,
+    content: "This unit focuses on advanced threat intelligence concepts and practices. You'll learn how to collect, analyze, and utilize threat data to improve your organization's security posture. Topics include threat intelligence platforms, intelligence sharing frameworks, attribution techniques, and proactive threat hunting methodologies.",
+    pdfUrl: "/pdfs/advanced-threat-intelligence.pdf",
+    quiz: {
+      title: "Advanced Threat Intelligence Quiz",
+      questions: [
+        {
+          id: 1,
+          question: "What is the primary purpose of threat intelligence?",
+          options: ["Blocking all threats", "Understanding adversary tactics", "Eliminating the need for firewalls", "Increasing network speed"],
+          correctAnswer: 1
+        },
+        {
+          id: 2,
+          question: "Which of these is NOT a common source of threat intelligence?",
+          options: ["Dark web monitoring", "Security vendor reports", "Social media analysis", "Employee performance reviews"],
+          correctAnswer: 3
+        },
+        {
+          id: 3,
+          question: "What does IOC stand for in threat intelligence?",
+          options: ["Internal Operation Control", "Indicator Of Compromise", "Internet Of Computing", "Integrated Online Control"],
+          correctAnswer: 1
+        }
+      ]
+    }
   }
 ];
 
 const CybersecuritySection = () => {
-  const [activeTab, setActiveTab] = useState("unit-1");
+  const [activeTab, setActiveTab] = useState("cybersecurity-tab");
   const [completedQuizzes, setCompletedQuizzes] = useState<number[]>([]);
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<Unit | null>(null);
@@ -226,107 +257,141 @@ const CybersecuritySection = () => {
           </p>
         </div>
 
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-medium">Your Learning Progress</h3>
-            <span className="text-sm font-medium text-green-800">
-              {completedQuizzes.length}/{cybersecurityUnits.length} Units Completed
-            </span>
-          </div>
-          <Progress value={progressPercentage} className="h-3 bg-gray-200" />
-        </div>
+        <Tabs defaultValue="cybersecurity-tab" className="w-full" onValueChange={setActiveTab}>
+          <TabsList className="grid grid-cols-2 mb-8">
+            <TabsTrigger value="cybersecurity-tab">Cybersecurity Units</TabsTrigger>
+            <TabsTrigger value="indian-knowledge-tab">Integration with Indian Knowledge System</TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="cybersecurity-tab">
+            <div className="mb-8">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="text-lg font-medium">Your Learning Progress</h3>
+                <span className="text-sm font-medium text-green-800">
+                  {completedQuizzes.length}/{cybersecurityUnits.length} Units Completed
+                </span>
+              </div>
+              <Progress value={progressPercentage} className="h-3 bg-gray-200" />
+            </div>
 
-        {showQuiz && currentUnit ? (
-          <CybersecurityQuiz 
-            unit={currentUnit} 
-            onComplete={() => handleQuizComplete(currentUnit.id)} 
-            onBack={() => setShowQuiz(false)} 
-          />
-        ) : showNotes && currentUnit ? (
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <Button variant="ghost" size="sm" onClick={handleBackFromNotes}>
-                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
-                </Button>
-                <CardTitle>{currentUnit.title} - Notes</CardTitle>
-                <div></div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center space-y-6">
-                <File className="h-16 w-16 text-red-500" />
-                <h3 className="text-xl font-semibold">{currentUnit.title} Learning Material</h3>
-                <p className="text-center text-gray-600">
-                  Access comprehensive learning materials for this unit in PDF format.
-                </p>
-                <Button className="bg-green-800 hover:bg-green-900 flex items-center gap-2" onClick={() => window.open(currentUnit.pdfUrl, '_blank')}>
-                  <FileText className="h-4 w-4" /> Download PDF
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          <Tabs defaultValue="unit-1" className="w-full" onValueChange={setActiveTab}>
-            <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-8">
-              {cybersecurityUnits.map((unit) => (
-                <TabsTrigger 
-                  key={unit.id} 
-                  value={`unit-${unit.id}`}
-                  className="relative"
-                >
-                  Unit {unit.id}
-                  {completedQuizzes.includes(unit.id) && (
-                    <CheckCircle className="h-4 w-4 text-green-500 absolute -top-1 -right-1" />
-                  )}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-            
-            {cybersecurityUnits.map((unit) => (
-              <TabsContent key={unit.id} value={`unit-${unit.id}`}>
-                <Card>
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      {unit.icon}
-                      <div>
-                        <CardTitle>{unit.title}</CardTitle>
-                        <CardDescription>{unit.description}</CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-700 mb-4">
-                      {unit.content}
+            {showQuiz && currentUnit ? (
+              <CybersecurityQuiz 
+                unit={currentUnit} 
+                onComplete={() => handleQuizComplete(currentUnit.id)} 
+                onBack={() => setShowQuiz(false)} 
+              />
+            ) : showNotes && currentUnit ? (
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <Button variant="ghost" size="sm" onClick={handleBackFromNotes}>
+                      <ArrowLeft className="mr-2 h-4 w-4" /> Back
+                    </Button>
+                    <CardTitle>{currentUnit.title} - Notes</CardTitle>
+                    <div></div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-col items-center space-y-6">
+                    <File className="h-16 w-16 text-red-500" />
+                    <h3 className="text-xl font-semibold">{currentUnit.title} Learning Material</h3>
+                    <p className="text-center text-gray-600">
+                      Access comprehensive learning materials for this unit in PDF format.
                     </p>
-                    <h4 className="font-semibold mt-6 mb-2">What You'll Learn:</h4>
-                    <ul className="list-disc pl-5 space-y-1 text-gray-700">
-                      <li>Key concepts and terminology in {unit.title.toLowerCase()}</li>
-                      <li>Practical applications and best practices</li>
-                      <li>Industry standards and emerging trends</li>
-                      <li>Hands-on skills through practical exercises</li>
-                    </ul>
-                  </CardContent>
-                  <CardFooter className="flex justify-between">
-                    <Button 
-                      variant="outline" 
-                      className="flex items-center gap-2"
-                      onClick={() => handleViewNotes(unit)}
-                    >
-                      <FileText className="h-4 w-4" /> View Notes
+                    <Button className="bg-green-800 hover:bg-green-900 flex items-center gap-2" onClick={() => window.open(currentUnit.pdfUrl, '_blank')}>
+                      <FileText className="h-4 w-4" /> Download PDF
                     </Button>
-                    <Button 
-                      onClick={() => handleStartQuiz(unit)}
-                      className={`bg-green-800 hover:bg-green-900 ${completedQuizzes.includes(unit.id) ? "bg-green-600 hover:bg-green-700" : ""}`}
-                    >
-                      {completedQuizzes.includes(unit.id) ? "Retake Quiz" : "Start Quiz"}
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </TabsContent>
-            ))}
-          </Tabs>
-        )}
+                  </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {cybersecurityUnits.map((unit) => (
+                  <Card key={unit.id} className="h-full flex flex-col">
+                    <CardHeader>
+                      <div className="flex items-center gap-4">
+                        {unit.icon}
+                        <div>
+                          <CardTitle className="text-xl">{unit.title}</CardTitle>
+                          <CardDescription>{unit.description}</CardDescription>
+                        </div>
+                        {completedQuizzes.includes(unit.id) && (
+                          <CheckCircle className="h-5 w-5 text-green-500 ml-auto" />
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardContent className="flex-grow">
+                      <p className="text-gray-700 mb-4 line-clamp-3">
+                        {unit.content}
+                      </p>
+                    </CardContent>
+                    <CardFooter className="flex justify-between mt-auto">
+                      <Button 
+                        variant="outline" 
+                        className="flex items-center gap-2"
+                        onClick={() => handleViewNotes(unit)}
+                      >
+                        <FileText className="h-4 w-4" /> View Notes
+                      </Button>
+                      <Button 
+                        onClick={() => handleStartQuiz(unit)}
+                        className={`bg-green-800 hover:bg-green-900 ${completedQuizzes.includes(unit.id) ? "bg-green-600 hover:bg-green-700" : ""}`}
+                      >
+                        {completedQuizzes.includes(unit.id) ? "Retake Quiz" : "Start Quiz"}
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+          
+          <TabsContent value="indian-knowledge-tab">
+            <Card>
+              <CardHeader>
+                <CardTitle>Integration with Indian Knowledge System</CardTitle>
+                <CardDescription>
+                  Exploring cybersecurity through the lens of ancient Indian wisdom and knowledge systems
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Ancient Indian Security Practices</h3>
+                    <p className="text-gray-700">
+                      India's rich history includes sophisticated methods of information protection that date back thousands of years. 
+                      From the cryptographic techniques found in ancient texts to the elaborate physical security systems employed to protect 
+                      knowledge in ancient universities like Nalanda and Takshashila, these historical practices provide valuable context for modern cybersecurity approaches.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Ethical Frameworks from Indian Philosophy</h3>
+                    <p className="text-gray-700">
+                      Indian philosophical traditions emphasize ethical conduct and responsibility. Concepts like "Dharma" (righteous duty) 
+                      and "Ahimsa" (non-violence) can inform modern cybersecurity ethics, providing frameworks for responsible 
+                      disclosure, privacy protection, and the ethical use of security tools.
+                    </p>
+                  </div>
+                  
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Holistic Security Approaches</h3>
+                    <p className="text-gray-700">
+                      Traditional Indian knowledge systems approached problems holistically, considering multiple interconnected factors. 
+                      This perspective aligns with modern "defense in depth" security strategies and offers insights for developing 
+                      comprehensive security postures that address technological, human, and procedural aspects of protection.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-green-50 p-6 rounded-lg border border-green-100">
+                    <h4 className="font-semibold text-green-800 mb-2">Coming Soon</h4>
+                    <p>We're developing comprehensive course materials that bridge ancient Indian knowledge systems with contemporary cybersecurity practices. Stay tuned for upcoming modules exploring these connections in greater depth.</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
     </section>
   );
