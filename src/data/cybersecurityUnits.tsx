@@ -60,7 +60,7 @@ export const cybersecurityUnits: Unit[] = [
     description: "Learn how to secure networks and prevent unauthorized access",
     icon: <Server className="h-8 w-8 text-green-800" />,
     content: "Network security focuses on protecting the integrity, confidentiality, and accessibility of computer networks and data. This unit covers firewalls, intrusion detection systems, VPNs, network protocols, and secure network architectures to defend against various network-based attacks.",
-    pdfUrl: "/pdfs/network-security.pdf",
+    pdfUrl: "/pdfs/CS_Chapt-2 Notes.pdf",
     quiz: {
       title: "Network Security Quiz",
       questions: [
@@ -91,7 +91,7 @@ export const cybersecurityUnits: Unit[] = [
     description: "Explore methods to secure data through encryption techniques",
     icon: <Lock className="h-8 w-8 text-green-800" />,
     content: "This unit explores the science of encrypting information to protect data during storage and transmission. You'll learn about symmetric and asymmetric encryption, hashing algorithms, digital signatures, and the mathematical principles behind modern cryptographic systems.",
-    pdfUrl: "/pdfs/cryptography-and-encryption.pdf",
+    pdfUrl: "/pdfs/Unit-3 Cyber Security Notes.docx.pdf",
     quiz: {
       title: "Cryptography Quiz",
       questions: [
@@ -122,7 +122,7 @@ export const cybersecurityUnits: Unit[] = [
     description: "Master the principles of governance, compliance, and risk assessment",
     icon: <ShieldCheck className="h-8 w-8 text-green-800" />,
     content: "This unit covers the frameworks, policies, and procedures that guide an organization's security program. Topics include security policies, risk assessment methodologies, compliance regulations like GDPR and HIPAA, and security governance frameworks such as NIST and ISO 27001.",
-    pdfUrl: "/pdfs/security-governance.pdf",
+    pdfUrl: "/pdfs/Unit-4 Cyber Security Notes.pdf",
     quiz: {
       title: "Governance and Risk Quiz",
       questions: [
@@ -153,7 +153,7 @@ export const cybersecurityUnits: Unit[] = [
     description: "Develop skills to respond to security incidents and implement recovery plans",
     icon: <Database className="h-8 w-8 text-green-800" />,
     content: "Learn how organizations prepare for, detect, contain, and recover from security incidents. This unit covers incident response plans, forensic investigation techniques, business continuity planning, and disaster recovery strategies to minimize damage and restore operations after a security breach.",
-    pdfUrl: "/pdfs/incident-response.pdf",
+    pdfUrl: "/pdfs/Unit-5 Cyber Security Notes.pdf",
     quiz: {
       title: "Incident Response Quiz",
       questions: [
@@ -184,7 +184,7 @@ export const cybersecurityUnits: Unit[] = [
     description: "Learn techniques to identify, analyze, and respond to advanced cyber threats",
     icon: <Globe className="h-8 w-8 text-green-800" />,
     content: "This unit focuses on advanced threat intelligence concepts and practices. You'll learn how to collect, analyze, and utilize threat data to improve your organization's security posture. Topics include threat intelligence platforms, intelligence sharing frameworks, attribution techniques, and proactive threat hunting methodologies.",
-    pdfUrl: "/pdfs/advanced-threat-intelligence.pdf",
+    pdfUrl: "/pdfs/UNIT-6 DIGITAL FORENSICS.pdf",
     quiz: {
       title: "Advanced Threat Intelligence Quiz",
       questions: [
