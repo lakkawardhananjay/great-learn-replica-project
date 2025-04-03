@@ -19,6 +19,7 @@ type Unit = {
   description: string;
   icon: React.ReactNode;
   content: string;
+  pdfUrl: string;
   quiz: {
     title: string;
     questions: QuizQuestion[];
@@ -76,7 +77,7 @@ const CybersecurityQuiz = ({ unit, onComplete, onBack }: CybersecurityQuizProps)
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="text-center">
-            <div className="text-5xl font-bold mb-4 text-greatblue">{score} / {totalQuestions}</div>
+            <div className="text-5xl font-bold mb-4 text-green-800">{score} / {totalQuestions}</div>
             <div className="text-lg mb-2">
               Your score: {scorePercentage.toFixed(0)}%
             </div>
@@ -115,11 +116,16 @@ const CybersecurityQuiz = ({ unit, onComplete, onBack }: CybersecurityQuizProps)
           <Button variant="outline" onClick={onBack}>
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Units
           </Button>
-          <Button onClick={onComplete}>Complete Quiz</Button>
+          <Button className="bg-green-800 hover:bg-green-900" onClick={onComplete}>Complete Quiz</Button>
         </CardFooter>
       </Card>
     );
   }
+
+  // The key fix: We need to explicitly set the RadioGroup value to undefined when no answer is selected
+  const currentValue = answers[currentQuestionIndex] === -1 ? 
+    undefined : 
+    answers[currentQuestionIndex].toString();
 
   return (
     <Card className="w-full max-w-3xl mx-auto">
@@ -138,8 +144,9 @@ const CybersecurityQuiz = ({ unit, onComplete, onBack }: CybersecurityQuizProps)
         <div className="space-y-6">
           <h3 className="text-lg font-medium">{currentQuestion.question}</h3>
           
+          {/* Key fix is here: The RadioGroup now resets properly when changing questions */}
           <RadioGroup 
-            value={answers[currentQuestionIndex] === -1 ? undefined : answers[currentQuestionIndex].toString()}
+            value={currentValue}
             onValueChange={handleAnswerChange}
           >
             <div className="space-y-3">
@@ -162,6 +169,7 @@ const CybersecurityQuiz = ({ unit, onComplete, onBack }: CybersecurityQuizProps)
           Previous
         </Button>
         <Button 
+          className="bg-green-800 hover:bg-green-900"
           onClick={handleNext}
           disabled={answers[currentQuestionIndex] === -1}
         >

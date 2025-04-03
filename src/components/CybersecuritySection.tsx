@@ -4,7 +4,7 @@ import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Progress } from './ui/progress';
-import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle } from 'lucide-react';
+import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle, FileText, FilePdf } from 'lucide-react';
 import CybersecurityQuiz from './CybersecurityQuiz';
 
 // Define the structure for our cybersecurity units
@@ -21,6 +21,7 @@ type Unit = {
   description: string;
   icon: React.ReactNode;
   content: string;
+  pdfUrl: string;
   quiz: {
     title: string;
     questions: QuizQuestion[];
@@ -32,8 +33,9 @@ const cybersecurityUnits: Unit[] = [
     id: 1,
     title: "Introduction to Cybersecurity",
     description: "Understand the fundamentals of cybersecurity and its importance",
-    icon: <Shield className="h-8 w-8 text-greatblue" />,
+    icon: <Shield className="h-8 w-8 text-green-800" />,
     content: "This unit covers the basic concepts of cybersecurity including threat types, common vulnerabilities, and the importance of security in modern digital ecosystems. You'll learn about the CIA triad (Confidentiality, Integrity, Availability) and how it forms the foundation of information security practices.",
+    pdfUrl: "/pdfs/introduction-to-cybersecurity.pdf",
     quiz: {
       title: "Cybersecurity Fundamentals Quiz",
       questions: [
@@ -62,8 +64,9 @@ const cybersecurityUnits: Unit[] = [
     id: 2,
     title: "Network Security",
     description: "Learn how to secure networks and prevent unauthorized access",
-    icon: <Server className="h-8 w-8 text-greatblue" />,
+    icon: <Server className="h-8 w-8 text-green-800" />,
     content: "Network security focuses on protecting the integrity, confidentiality, and accessibility of computer networks and data. This unit covers firewalls, intrusion detection systems, VPNs, network protocols, and secure network architectures to defend against various network-based attacks.",
+    pdfUrl: "/pdfs/network-security.pdf",
     quiz: {
       title: "Network Security Quiz",
       questions: [
@@ -92,8 +95,9 @@ const cybersecurityUnits: Unit[] = [
     id: 3,
     title: "Cryptography and Encryption",
     description: "Explore methods to secure data through encryption techniques",
-    icon: <Lock className="h-8 w-8 text-greatblue" />,
+    icon: <Lock className="h-8 w-8 text-green-800" />,
     content: "This unit explores the science of encrypting information to protect data during storage and transmission. You'll learn about symmetric and asymmetric encryption, hashing algorithms, digital signatures, and the mathematical principles behind modern cryptographic systems.",
+    pdfUrl: "/pdfs/cryptography-and-encryption.pdf",
     quiz: {
       title: "Cryptography Quiz",
       questions: [
@@ -122,8 +126,9 @@ const cybersecurityUnits: Unit[] = [
     id: 4,
     title: "Security Governance and Risk Management",
     description: "Master the principles of governance, compliance, and risk assessment",
-    icon: <ShieldCheck className="h-8 w-8 text-greatblue" />,
+    icon: <ShieldCheck className="h-8 w-8 text-green-800" />,
     content: "This unit covers the frameworks, policies, and procedures that guide an organization's security program. Topics include security policies, risk assessment methodologies, compliance regulations like GDPR and HIPAA, and security governance frameworks such as NIST and ISO 27001.",
+    pdfUrl: "/pdfs/security-governance.pdf",
     quiz: {
       title: "Governance and Risk Quiz",
       questions: [
@@ -152,8 +157,9 @@ const cybersecurityUnits: Unit[] = [
     id: 5,
     title: "Incident Response and Recovery",
     description: "Develop skills to respond to security incidents and implement recovery plans",
-    icon: <Database className="h-8 w-8 text-greatblue" />,
+    icon: <Database className="h-8 w-8 text-green-800" />,
     content: "Learn how organizations prepare for, detect, contain, and recover from security incidents. This unit covers incident response plans, forensic investigation techniques, business continuity planning, and disaster recovery strategies to minimize damage and restore operations after a security breach.",
+    pdfUrl: "/pdfs/incident-response.pdf",
     quiz: {
       title: "Incident Response Quiz",
       questions: [
@@ -185,6 +191,7 @@ const CybersecuritySection = () => {
   const [completedQuizzes, setCompletedQuizzes] = useState<number[]>([]);
   const [showQuiz, setShowQuiz] = useState(false);
   const [currentUnit, setCurrentUnit] = useState<Unit | null>(null);
+  const [showNotes, setShowNotes] = useState(false);
 
   // Calculate progress as percentage of completed quizzes
   const progressPercentage = (completedQuizzes.length / cybersecurityUnits.length) * 100;
@@ -192,6 +199,7 @@ const CybersecuritySection = () => {
   const handleStartQuiz = (unit: Unit) => {
     setCurrentUnit(unit);
     setShowQuiz(true);
+    setShowNotes(false);
   };
 
   const handleQuizComplete = (unitId: number) => {
@@ -201,11 +209,21 @@ const CybersecuritySection = () => {
     setShowQuiz(false);
   };
 
+  const handleViewNotes = (unit: Unit) => {
+    setCurrentUnit(unit);
+    setShowNotes(true);
+    setShowQuiz(false);
+  };
+
+  const handleBackFromNotes = () => {
+    setShowNotes(false);
+  };
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Cybersecurity Specialization</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Cybersecurity Program</h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             Master the skills needed to protect information systems and digital assets from cyber threats
           </p>
@@ -214,11 +232,11 @@ const CybersecuritySection = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-medium">Your Learning Progress</h3>
-            <span className="text-sm font-medium text-greatblue">
+            <span className="text-sm font-medium text-green-800">
               {completedQuizzes.length}/{cybersecurityUnits.length} Units Completed
             </span>
           </div>
-          <Progress value={progressPercentage} className="h-3" />
+          <Progress value={progressPercentage} className="h-3 bg-gray-200" indicatorClassName="bg-green-800" />
         </div>
 
         {showQuiz && currentUnit ? (
@@ -227,6 +245,30 @@ const CybersecuritySection = () => {
             onComplete={() => handleQuizComplete(currentUnit.id)} 
             onBack={() => setShowQuiz(false)} 
           />
+        ) : showNotes && currentUnit ? (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <Button variant="ghost" size="sm" onClick={handleBackFromNotes}>
+                  <Arrow left className="mr-2 h-4 w-4" /> Back
+                </Button>
+                <CardTitle>{currentUnit.title} - Notes</CardTitle>
+                <div></div>
+              </div>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-col items-center space-y-6">
+                <FilePdf className="h-16 w-16 text-red-500" />
+                <h3 className="text-xl font-semibold">{currentUnit.title} Learning Material</h3>
+                <p className="text-center text-gray-600">
+                  Access comprehensive learning materials for this unit in PDF format.
+                </p>
+                <Button className="bg-green-800 hover:bg-green-900 flex items-center gap-2" onClick={() => window.open(currentUnit.pdfUrl, '_blank')}>
+                  <FilePdf className="h-4 w-4" /> Download PDF
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ) : (
           <Tabs defaultValue="unit-1" className="w-full" onValueChange={setActiveTab}>
             <TabsList className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-8">
@@ -271,16 +313,14 @@ const CybersecuritySection = () => {
                   <CardFooter className="flex justify-between">
                     <Button 
                       variant="outline" 
-                      onClick={() => {
-                        const nextUnitId = unit.id % cybersecurityUnits.length + 1;
-                        setActiveTab(`unit-${nextUnitId}`);
-                      }}
+                      className="flex items-center gap-2"
+                      onClick={() => handleViewNotes(unit)}
                     >
-                      {unit.id === cybersecurityUnits.length ? "Back to Unit 1" : "Next Unit"}
+                      <FileText className="h-4 w-4" /> View Notes
                     </Button>
                     <Button 
                       onClick={() => handleStartQuiz(unit)}
-                      className={completedQuizzes.includes(unit.id) ? "bg-green-600 hover:bg-green-700" : ""}
+                      className={`bg-green-800 hover:bg-green-900 ${completedQuizzes.includes(unit.id) ? "bg-green-600 hover:bg-green-700" : ""}`}
                     >
                       {completedQuizzes.includes(unit.id) ? "Retake Quiz" : "Start Quiz"}
                     </Button>
