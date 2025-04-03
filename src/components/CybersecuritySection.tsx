@@ -33,7 +33,7 @@ const cybersecurityUnits: Unit[] = [
     description: "Understand the fundamentals of cybersecurity and its importance",
     icon: <Shield className="h-8 w-8 text-green-800" />,
     content: "This unit covers the basic concepts of cybersecurity including threat types, common vulnerabilities, and the importance of security in modern digital ecosystems. You'll learn about the CIA triad (Confidentiality, Integrity, Availability) and how it forms the foundation of information security practices.",
-    pdfUrl: "/pdfs/CS_Chapt-1 Notes",
+    pdfUrl: "/pdfs/CS_Chapt-1 Notes.pdf",
     quiz: {
       title: "Cybersecurity Fundamentals Quiz",
       questions: [
