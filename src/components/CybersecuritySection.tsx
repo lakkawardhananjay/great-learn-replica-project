@@ -1,13 +1,11 @@
-
 import React, { useState } from 'react';
 import { Button } from './ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Progress } from './ui/progress';
-import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle, FileText, FilePdf } from 'lucide-react';
+import { Shield, ShieldCheck, Lock, Server, Database, CheckCircle, FileText, ArrowLeft, File } from 'lucide-react';
 import CybersecurityQuiz from './CybersecurityQuiz';
 
-// Define the structure for our cybersecurity units
 type QuizQuestion = {
   id: number;
   question: string;
@@ -193,7 +191,6 @@ const CybersecuritySection = () => {
   const [currentUnit, setCurrentUnit] = useState<Unit | null>(null);
   const [showNotes, setShowNotes] = useState(false);
 
-  // Calculate progress as percentage of completed quizzes
   const progressPercentage = (completedQuizzes.length / cybersecurityUnits.length) * 100;
 
   const handleStartQuiz = (unit: Unit) => {
@@ -236,7 +233,7 @@ const CybersecuritySection = () => {
               {completedQuizzes.length}/{cybersecurityUnits.length} Units Completed
             </span>
           </div>
-          <Progress value={progressPercentage} className="h-3 bg-gray-200" indicatorClassName="bg-green-800" />
+          <Progress value={progressPercentage} className="h-3 bg-gray-200" />
         </div>
 
         {showQuiz && currentUnit ? (
@@ -250,7 +247,7 @@ const CybersecuritySection = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Button variant="ghost" size="sm" onClick={handleBackFromNotes}>
-                  <Arrow left className="mr-2 h-4 w-4" /> Back
+                  <ArrowLeft className="mr-2 h-4 w-4" /> Back
                 </Button>
                 <CardTitle>{currentUnit.title} - Notes</CardTitle>
                 <div></div>
@@ -258,13 +255,13 @@ const CybersecuritySection = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center space-y-6">
-                <FilePdf className="h-16 w-16 text-red-500" />
+                <File className="h-16 w-16 text-red-500" />
                 <h3 className="text-xl font-semibold">{currentUnit.title} Learning Material</h3>
                 <p className="text-center text-gray-600">
                   Access comprehensive learning materials for this unit in PDF format.
                 </p>
                 <Button className="bg-green-800 hover:bg-green-900 flex items-center gap-2" onClick={() => window.open(currentUnit.pdfUrl, '_blank')}>
-                  <FilePdf className="h-4 w-4" /> Download PDF
+                  <FileText className="h-4 w-4" /> Download PDF
                 </Button>
               </div>
             </CardContent>
